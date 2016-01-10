@@ -1,0 +1,5 @@
+activemq:
+  image: webcenter/activemq:5.12.0
+  ports:
+    - "8161:8161"
+    - "61616:61616"

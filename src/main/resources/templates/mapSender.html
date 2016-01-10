@@ -13,6 +13,8 @@
         $(function () {
             $('button#send').click(function () {
                 var mapMessageToSend = $.trim($('#mapMessageToSend').val());
+                var amqUrl = $.trim($('#amqUrl').val());
+                var queueName = $.trim($('#queueName').val());
 
                 if (mapMessageToSend == "") {
                     alert("Error the field 'Json to send' should not be empty.")
@@ -21,8 +23,8 @@
                 $.ajax({
                            type: "POST",
                            url: "send",
-                           data: '{"amqUrl": "frompage", "queueName": "frompagequeue", "params": '
-                                 + mapMessageToSend + '}',
+                           data: '{"amqUrl": "' + amqUrl + '", "queueName": "' + queueName + '",' +
+                                 '"params": ' + mapMessageToSend + '}',
                            contentType: "application/json",
                            success: function (data) {
                                console.log("testPost successful!");
@@ -42,6 +44,9 @@
 <div>
     <label for="amqUrl">ActiveMQ URL:</label>
     <input type="text" id="amqUrl"/>
+
+    <label for="queueName">Queue name:</label>
+    <input type="text" id="queueName"/>
 </div>
 <div>
     Json to send:
