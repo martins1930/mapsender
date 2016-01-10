@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>MapMessage Sender</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style type="text/css">
+        div {
+            margin: 10px;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('button#send').click(function () {
+                var mapMessageToSend = $.trim($('#mapMessageToSend').val());
+
+                if (mapMessageToSend == "") {
+                    alert("Error the field 'Json to send' should not be empty.")
+                }
+
+                $.ajax({
+                           type: "POST",
+                           url: "send",
+                           data: '{"amqUrl": "frompage", "queueName": "frompagequeue", "params": '
+                                 + mapMessageToSend + '}',
+                           contentType: "application/json",
+                           success: function (data) {
+                               console.log("testPost successful!");
+                           },
+                           dataType: "json", // expected return value type
+                           error: function (data, status, error) {
+                               console.log("testPost with errors!");
+                           }
+                       });
+            });
+        })
+    </script>
+</head>
+<body>
+<h1>MapMessage Sender</h1>
+
+<div>
+    <label for="amqUrl">ActiveMQ URL:</label>
+    <input type="text" id="amqUrl"/>
+</div>
+<div>
+    Json to send:
+    <div>
+        <textarea id="mapMessageToSend" rows="4" cols="50">{"foo":"bar"}</textarea>
+    </div>
+
+
+</div>
+
+
+<div>
+    <button id="send">Send map message</button>
+</div>
+
+</body>
+</html>
